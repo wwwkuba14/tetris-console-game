@@ -8,9 +8,16 @@ Square::Square()
 
     reserveTheLength(length_);
 
-    setBody(0, spawnX(), 0);
-    setBody(1, spawnX() + 1, 0);
-    setBody(2, spawnX(), 1);
-    setBody(3, spawnX() + 1, 1);
+    bodyPivot.first = spawnX();
+    bodyPivot.second = 1;
+
+    setBody(0,bodyPivot.first, bodyPivot.second);
+    setBody(1, bodyPivot.first + 1, bodyPivot.second);
+    setBody(2, bodyPivot.first , bodyPivot.second + 1);
+    setBody(3, bodyPivot.first + 1, bodyPivot.second + 1 );
+
+    pivotPointNumb = 0;
+
+    figureChar = SQUARE_CHAR;
 }
 

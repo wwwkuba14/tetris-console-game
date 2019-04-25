@@ -1,9 +1,9 @@
 #include "figure.hpp"
+#include "plane.hpp"
 
 Figure::Figure()
 {
     spawnPoint_ = PLANE_WIDTH / 2;
-
 }
 
 Figure::~Figure()
@@ -42,16 +42,45 @@ void Figure::moveDown()
 
 void Figure::moveLeft()
 {
-    for(int i = 0 ; i < length_; i++)
+    for(int j = 0 ; j < length_; j++)
     {
-        figBody_[i].first -- ;
+        if(this->getBody(j).first == 0 )
+        {
+            for (int i = 0; i < length_; i++)
+            {
+                figBody_[i].first--;
+            }
+        }
     }
 }
 
 void Figure::moveRight()
 {
-    for (int i = 0; i < length_; i++)
+    for (int j = 0; j < length_; j++)
     {
-        figBody_[i].first++;
+        if (this->getBody(j).first == PLANE_WIDTH - 1 )
+       {
+            for (int i = 0; i < length_; i++)
+            {
+                figBody_[i].first++;
+            }
+        }
+    }
+
+}
+
+void Figure::rotateR()
+{
+    vector<pair<int,int>> tempBody;
+    tempBody.reserve(length_);
+
+    this->bodyPivot = getBody(this->pivotPointNumb);
+
+    for(int i = 0 ; i < length_; ++i)
+    {
+        tempBody[i].first = this->bodyPivot.first + (this->getBody(i).second - this->bodyPivot.second) * (-1);
+        tempBody[i].second = this->bodyPivot.second + (this->getBody(i).first - this->bodyPivot.first) ; 
+
+        this->setBody(i , tempBody[i].first,tempBody[i].second);
     }
 }

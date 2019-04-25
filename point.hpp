@@ -1,5 +1,5 @@
-#ifndef LFIGURE_HPP
-#define LFIGURE_HPP
+#ifndef POINT_HPP
+#define POINT_HPP
 
 #include "macros.cpp"
 #include "figure.hpp"
@@ -7,11 +7,11 @@
 #include <vector>
 #include <iostream>
 
-class Lfigure : public Figure
+class Point : public Figure
 {
 public:
-    Lfigure();
-    ~Lfigure();
+    Point();
+    ~Point();
 
 private:
 };

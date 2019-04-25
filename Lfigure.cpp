@@ -6,9 +6,16 @@ Lfigure::Lfigure()
 
     reserveTheLength(length_);
 
-    setBody(0,spawnX() - 1 , 0);
-    setBody(1,spawnX() - 1 , 1);
-    setBody(2,spawnX() , 1);
-    setBody(3,spawnX() + 1 , 1);
-    setBody(4,spawnX() + 2 , 1);
+    bodyPivot.first = spawnX();
+    bodyPivot.second = 1;
+
+    setBody(0,bodyPivot.first - 1 , bodyPivot.second - 1);
+    setBody(1,bodyPivot.first - 1 , bodyPivot.second);
+    setBody(2,bodyPivot.first , bodyPivot.second);
+    setBody(3,bodyPivot.first + 1, bodyPivot.second);
+    setBody(4,bodyPivot.first + 2 , bodyPivot.second);
+
+    pivotPointNumb = 2;
+
+    figureChar = L_FIGURE_CHAR;
 }

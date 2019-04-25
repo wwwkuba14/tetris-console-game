@@ -1,64 +1,75 @@
 #include <iostream>
+#include <stdlib.h>
+
 #include "plane.hpp"
 #include "figure.hpp"
 #include "square.hpp"
 #include "Lfigure.hpp"
+#include "LfigureInvert.hpp"
+#include "line.hpp"
+#include "point.hpp"
+#include "fig5.hpp"
+#include "fig6.hpp"
+
 #include "unistd.h"
 #include <unistd.h>  //_getcher
 #include <termios.h> //_getcher
+
 
 using namespace std; 
 
 bool gameOver = false; 
 
+int score = 0 ;
+
 void turn(Figure &figure, char dir);
 char getcher();
 void randFigure();
 
+Plane plansza;
 Figure *figPointer;
 char dir = 'n';
 
 int main()
 {
-
-    Plane plansza; 
+    int pointsAdd = PLANE_WIDTH;
     
     figPointer = new Lfigure; 
     
 
     while (!gameOver)
     {
-        dir = getcher();
-        plansza.clearMap();
+        dir = getcher(); // get control char
         turn(*figPointer, dir);
         plansza.updateMap(*figPointer);
+
         figPointer->moveDown();
-        if(plansza.bottomCheck(*figPointer))
+
+        plansza.fullLineChecker();
+
+        if (plansza.bottomCheck(*figPointer))
         {
             delete figPointer;
             randFigure();
             cout << " BOTTOM ! " << endl;
         }
-        //
 
-        cout << endl;
-        cout << endl;
-
-
-
+        system("clear");
 
         plansza.drawMap();
+        plansza.clearMap();
+        //cout << "(" << figPointer->getBody(figPointer->pivotPointNumb).first << "," << figPointer->getBody(figPointer->pivotPointNumb).second << ")" << endl;
+        cout << "SCORE: " << plansza.getPoints() << endl;
 
-        usleep(PAUSE_LENGTH);
+        usleep(PAUSE_LENGTH );
     }
-    
 
     return 0;
 }
 
 void randFigure()
 {
-    int random = rand() % 2;
+    int random = rand() % 7;
 
     switch (random)
     {
@@ -67,6 +78,21 @@ void randFigure()
         break;
     case 1:
         figPointer = new Lfigure;
+        break;
+    case 2:
+        figPointer = new LfigureInvert;
+        break;
+    case 3:
+        figPointer = new Line;
+        break;
+    case 4:
+        figPointer = new Point;
+        break;
+    case 5:
+        figPointer = new Fig5;
+        break;
+    case 6:
+        figPointer = new Fig6;
         break;
     }
 }
@@ -85,7 +111,13 @@ void turn(Figure &figure, char dir)
 
     case 'd':
     case 'D':
+        
     figure.moveRight();
+        break;
+    
+    case 'r':
+    case 'R':
+    figure.rotateR();
         break;
     }
 
@@ -121,4 +153,4 @@ char getcher()
  
 
     return buf;
-}
+} 

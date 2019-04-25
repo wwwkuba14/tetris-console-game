@@ -1,8 +1,9 @@
 #include "plane.hpp"
+#include "figure.hpp"
 #include <iostream>
 
 
-
+// init the plane 
 Plane::Plane()
 {
     for (int i = 0; i < heigh_; i++)
@@ -19,7 +20,7 @@ Plane::~Plane()
 {
 
 }
-
+// draw the map to screen with it's content in specific moment
 void Plane::drawMap()
 {
     for(int i = 0; i < heigh_; i++)
@@ -31,7 +32,7 @@ void Plane::drawMap()
         std::cout << endl;
     }
 }
-
+// update content of the map with figure and it's body
 void Plane::updateMap(Figure &figure)
 {
     for(int i = 0 ; i < heigh_; i++)
@@ -40,20 +41,20 @@ void Plane::updateMap(Figure &figure)
         {
             for(int x = 0 ; x < figure.length_ ; x++)
             {
-                if(figure.getBody(x).first == i && figure.getBody(x).second == j)
+                if(figure.getBody(x).first == j && figure.getBody(x).second == i)
                 {
-                    mapArray_[j][i] = FIGURE_CHAR;
+                    mapArray_[i][j] = figure.figureChar;
                 }
 
-                if(figureArray_[i][j]== FIGURE_CHAR)
+                if(figureArray_[i][j] != PLANE_CHAR)
                 {
-                    mapArray_[i][j] = FIGURE_CHAR;
+                    mapArray_[i][j] = figureArray_[i][j];
                 }
             }
         }
     }
 }
-
+// clear the map content to plane_char
 void Plane::clearMap()
 {
     for (int i = 0; i < heigh_; i++)
@@ -64,10 +65,9 @@ void Plane::clearMap()
         }
     }
 }
-
+// check if some figure is on the bottom of the map or on another figure
 bool Plane::bottomCheck(Figure &figure)
 {
-    bool bottom = false;
 
     for(int i = 0; i < PLANE_HEIGH; i++)
     {
@@ -75,17 +75,8 @@ bool Plane::bottomCheck(Figure &figure)
         {
             for(int x = 0; x < figure.length_ ; x++)
             {
-                // znalazł się na samym dole
-                if(figure.getBody(x).second == PLANE_HEIGH)
-                {
-                    bottom = true ;
-                    
-                }
-                else if(mapArray_[figure.getBody(x).second + 1][figure.getBody(x).first] == FIGURE_CHAR)
-                {
-                    bottom = true ; 
-                }
-                if(bottom)
+                // znalazł się na samym dole albo na coś natrafił 
+                if ((figure.getBody(x).second == PLANE_HEIGH - 1) || (figureArray_[figure.getBody(x).second + 1][figure.getBody(x).first] != PLANE_CHAR))
                 {
                     figArrayUpdate(figure);
                     return true;
@@ -95,11 +86,65 @@ bool Plane::bottomCheck(Figure &figure)
     }
     return false;
 }
-
+// uppdate the figure element of the map
 void Plane::figArrayUpdate(Figure &figure)
 {
     for(int i = 0; i < figure.length_; i++)
     {
-        figureArray_[figure.getBody(i).second -1][figure.getBody(i).first] = FIGURE_CHAR;
+        figureArray_[figure.getBody(i).second][figure.getBody(i).first] = figure.figureChar;
     }
+}
+// check for full line
+bool Plane::fullLineChecker()
+{
+    bool fullFlag = false;
+    for(int i = PLANE_HEIGH-1; i >= 0; i--)
+    {
+        for(int j = 0; j < PLANE_WIDTH; j ++)
+        {
+            if(figureArray_[i][j] != PLANE_CHAR)
+            {
+                fullFlag = true;
+            }
+            else 
+            {
+                fullFlag = false;
+                break;
+            }
+        }
+
+        if(fullFlag)
+        {
+            for(int x = 0; x < PLANE_WIDTH; x++)
+            {
+                figureArray_[i][x] = PLANE_CHAR;
+            }
+            for(int y = i - 1; y >= 0; y-- )
+            {
+                for(int p = 0; p < PLANE_WIDTH; p++)
+                {
+                    if(figureArray_[y][p] != PLANE_CHAR)
+                    {
+                        char tempChar = figureArray_[y][p];
+                        figureArray_[y][p] = PLANE_CHAR;
+                        figureArray_[y + 1][p] = tempChar;
+                    }
+                }
+            }
+            fullFlag = false;
+            this->points = this->points + PLANE_WIDTH;
+        }
+    }
+
+    return fullFlag;
+}
+
+int Plane::getPoints()
+{
+    return points;
+}
+
+char Plane::getMapChar(int x, int y)
+{
+    return mapArray_[x][y];
 }

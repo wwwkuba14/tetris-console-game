@@ -2,6 +2,7 @@
 #define FIGURE_HPP
 
 #include "macros.cpp"
+#include "plane.hpp"
 #include <vector>
 #include <iostream>
 
@@ -12,19 +13,22 @@ class Figure
 public:
     Figure();
     ~Figure();
-   // position of first point
-    int posX_;
-    int poxY_;
 
     int length_;
+    pair<int,int> bodyPivot; 
+    int pivotPointNumb;
 
-    pair<int, int> getBody(int position);
+    char figureChar; 
+
+    virtual pair<int, int> getBody(int position);
     void setBody(int position, int x, int y);
     void reserveTheLength(int length);
     int spawnX();
     void moveDown();
     void moveLeft();
     void moveRight();
+
+    virtual void rotateR();
 
 private:
 

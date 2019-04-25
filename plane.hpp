@@ -19,8 +19,13 @@ public:
     void updateMap(Figure &figure);
     bool bottomCheck(Figure &figure);
     void figArrayUpdate(Figure &figure);
+    bool fullLineChecker();
+    int getPoints();
+    char getMapChar(int x, int y);
 
 private:
+    int points = 0;
+
     int width_ = PLANE_WIDTH;
     int heigh_ = PLANE_HEIGH;
 
