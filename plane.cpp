@@ -1,5 +1,4 @@
 #include "plane.hpp"
-#include "figure.hpp"
 #include <iostream>
 
 
@@ -147,4 +146,14 @@ int Plane::getPoints()
 char Plane::getMapChar(int x, int y)
 {
     return mapArray_[x][y];
+}
+
+bool Plane::gameOver()
+{
+    for(int i = 0 ; i < PLANE_WIDTH; i++)
+    {
+        if(figureArray_[1][i] != PLANE_CHAR)
+            return true;
+    }
+    return false; 
 }

@@ -1,5 +1,4 @@
 #include "figure.hpp"
-#include "plane.hpp"
 
 Figure::Figure()
 {
@@ -40,33 +39,49 @@ void Figure::moveDown()
     }
 }
 
-void Figure::moveLeft()
+bool Figure::moveLeft()
 {
+    bool sideMaxFlag = false;
     for(int j = 0 ; j < length_; j++)
     {
         if(this->getBody(j).first == 0 )
         {
-            for (int i = 0; i < length_; i++)
+            sideMaxFlag = true;
+            break;
+        }
+    }
+    if(!sideMaxFlag)
+    {
+        for (int i = 0; i < length_; i++)
             {
                 figBody_[i].first--;
             }
-        }
     }
+
+    return sideMaxFlag;
 }
 
-void Figure::moveRight()
+bool Figure::moveRight()
 {
+    bool sideMaxFlag = false;
     for (int j = 0; j < length_; j++)
     {
         if (this->getBody(j).first == PLANE_WIDTH - 1 )
-       {
-            for (int i = 0; i < length_; i++)
+        {
+            sideMaxFlag = true;
+            break;
+        }
+        
+    }
+    if(!sideMaxFlag)
+    {
+        for (int i = 0; i < length_; i++)
             {
                 figBody_[i].first++;
             }
-        }
     }
 
+    return sideMaxFlag;
 }
 
 void Figure::rotateR()

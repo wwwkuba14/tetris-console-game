@@ -2,7 +2,7 @@
 #define FIGURE_HPP
 
 #include "macros.cpp"
-#include "plane.hpp"
+
 #include <vector>
 #include <iostream>
 
@@ -25,8 +25,8 @@ public:
     void reserveTheLength(int length);
     int spawnX();
     void moveDown();
-    void moveLeft();
-    void moveRight();
+    bool moveLeft();
+    bool moveRight();
 
     virtual void rotateR();
 

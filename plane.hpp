@@ -19,6 +19,7 @@ public:
     void updateMap(Figure &figure);
     bool bottomCheck(Figure &figure);
     void figArrayUpdate(Figure &figure);
+    bool gameOver();
     bool fullLineChecker();
     int getPoints();
     char getMapChar(int x, int y);
