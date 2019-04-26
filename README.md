@@ -26,4 +26,4 @@ g++ *.cpp
 Part of code to keyboard controll system (marked in code) is from: [StackOverflow](https://stackoverflow.com/questions/7469139/what-is-the-equivalent-to-getch-getche-in-linux/7469410#7469410)
 
 ### Screen shot
-![image](https://github.com/wwwkuba14/snake-console-game/blob/master/snake.png)
+![image](https://github.com/wwwkuba14/tetris-console-game/blob/master/tetris.jpg)
