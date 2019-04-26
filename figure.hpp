@@ -25,8 +25,7 @@ public:
     void reserveTheLength(int length);
     int spawnX();
     void moveDown();
-    bool moveLeft();
-    bool moveRight();
+
 
     virtual void rotateR();
 

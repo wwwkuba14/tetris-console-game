@@ -134,20 +134,19 @@ bool Plane::fullLineChecker()
             this->points = this->points + PLANE_WIDTH;
         }
     }
-
     return fullFlag;
 }
-
+// return the points walue 
 int Plane::getPoints()
 {
     return points;
 }
-
+// get the map char
 char Plane::getMapChar(int x, int y)
 {
     return mapArray_[x][y];
 }
-
+// if the figure tower touch the top
 bool Plane::gameOver()
 {
     for(int i = 0 ; i < PLANE_WIDTH; i++)
@@ -156,4 +155,49 @@ bool Plane::gameOver()
             return true;
     }
     return false; 
+}
+
+bool Plane::moveLeft(Figure &figure)
+{
+    bool sideMaxFlag = false;
+    for(int j = 0 ; j < figure.length_; j++)
+    {
+        if(figure.getBody(j).first == 0 || figureArray_[figure.getBody(j).second][figure.getBody(j).first -1] != PLANE_CHAR)
+        {
+            sideMaxFlag = true;
+            break;
+        }
+    }
+    if(!sideMaxFlag)
+    {
+        for (int i = 0; i < figure.length_; i++)
+            {
+                figure.setBody(i,figure.getBody(i).first -1 ,figure.getBody(i).second);
+            }
+    }
+
+    return sideMaxFlag;
+}
+
+bool Plane::moveRight(Figure &figure)
+{
+    bool sideMaxFlag = false;
+    for (int j = 0; j < figure.length_; j++)
+    {
+        if (figure.getBody(j).first == PLANE_WIDTH - 1 || figureArray_[figure.getBody(j).second][figure.getBody(j).first + 1] != PLANE_CHAR)
+        {
+            sideMaxFlag = true;
+            break;
+        }
+        
+    }
+    if(!sideMaxFlag)
+    {
+        for (int i = 0; i < figure.length_; i++)
+            {
+                figure.setBody(i,figure.getBody(i).first +1 ,figure.getBody(i).second);
+            }
+    }
+
+    return sideMaxFlag;
 }

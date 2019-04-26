@@ -24,6 +24,9 @@ public:
     int getPoints();
     char getMapChar(int x, int y);
 
+    bool moveLeft(Figure &figure);
+    bool moveRight(Figure &figure);
+
 private:
     int points = 0;
 
