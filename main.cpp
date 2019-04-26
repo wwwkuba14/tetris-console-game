@@ -23,32 +23,36 @@ bool gameOver = false;
 
 int score = 0 ;
 
-void turn(Figure &figure, char dir);
+void turn(Plane &plane, Figure &figure, char dir);
 char getcher();
 void randFigure();
 
-Plane plansza;
+Plane *plansza;
 Figure *figPointer;
 char dir = 'n';
 
 int main()
 {
-    int pointsAdd = PLANE_WIDTH;
-    
-    figPointer = new Lfigure; 
-    
+    plansza = new Plane;
 
-    while (!plansza.gameOver())
+    int pointsAdd = PLANE_WIDTH;
+
+    figPointer = new Lfigure; 
+
+    while (!plansza->gameOver())
     {
+
         dir = getcher(); // get control char
-        turn(*figPointer, dir);
-        plansza.updateMap(*figPointer);
+
+        turn(*plansza, *figPointer, dir);
+
+        plansza->updateMap(*figPointer);
 
         figPointer->moveDown();
 
-        plansza.fullLineChecker();
+        plansza->fullLineChecker();
 
-        if (plansza.bottomCheck(*figPointer))
+        if (plansza->bottomCheck(*figPointer))
         {
             delete figPointer;
             randFigure();
@@ -57,14 +61,16 @@ int main()
 
         system("clear");
 
-        plansza.drawMap();
-        plansza.clearMap();
+        plansza->drawMap();
+        plansza->clearMap();
         //cout << "(" << figPointer->getBody(figPointer->pivotPointNumb).first << "," << figPointer->getBody(figPointer->pivotPointNumb).second << ")" << endl;
-        cout << "SCORE: " << plansza.getPoints() << endl;
+        cout << "SCORE: " << plansza->getPoints() << endl;
 
         usleep(PAUSE_LENGTH );
     }
-    cout << "Your total score: " << plansza.getPoints() << endl;
+    cout << "Your total score: " << plansza->getPoints() << endl;
+
+    delete plansza;
 
     return 0;
 }
@@ -101,25 +107,25 @@ void randFigure()
 
 
 
-void turn(Figure &figure, char dir)
+void turn(Plane &plane,Figure &figPointer, char dir)
 {
     switch (dir)
     {
     case 'a':
     case 'A':
 
-    figure.moveLeft();
+    plane.moveLeft(figPointer);
         break;
 
     case 'd':
     case 'D':
         
-    figure.moveRight();
+    plane.moveRight(figPointer);
         break;
     
     case 'r':
     case 'R':
-    figure.rotateR();
+    figPointer.rotateR();
         break;
     }
 
