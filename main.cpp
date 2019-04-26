@@ -3,6 +3,7 @@
 
 #include "plane.hpp"
 #include "figure.hpp"
+
 #include "square.hpp"
 #include "Lfigure.hpp"
 #include "LfigureInvert.hpp"
@@ -37,7 +38,7 @@ int main()
     figPointer = new Lfigure; 
     
 
-    while (!gameOver)
+    while (!plansza.gameOver())
     {
         dir = getcher(); // get control char
         turn(*figPointer, dir);
@@ -63,6 +64,7 @@ int main()
 
         usleep(PAUSE_LENGTH );
     }
+    cout << "Your total score: " << plansza.getPoints() << endl;
 
     return 0;
 }
@@ -123,8 +125,6 @@ void turn(Figure &figure, char dir)
 
     dir = 'n';
 }
-
-
 
 
 
